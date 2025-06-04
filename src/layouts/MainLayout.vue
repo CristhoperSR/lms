@@ -36,10 +36,34 @@
             v-for="item in menuItems"
             :key="item.name"
             class="menu-item-wrapper"
-            @mouseenter="setHoveredItem(item)"
-            @mouseleave="setHoveredItem(null)"
           >
+            <v-tooltip
+              v-if="!isMobile"
+              :model-value="hoveredItem === item"
+              location="end"
+              :offset="10"
+            >
+              <template v-slot:activator="{ props }">
+                <v-btn
+                  v-bind="props"
+                  :size="buttonSize"
+                  variant="flat"
+                  class="menu-item"
+                  :class="{ 'active': $route.name === item.name }"
+                  @click="navigateTo(item.route)"
+                  @mouseenter="setHoveredItem(item)"
+                  @mouseleave="setHoveredItem(null)"
+                  :ripple="false"
+                >
+                  <v-icon :size="iconSize">{{ item.icon }}</v-icon>
+                </v-btn>
+              </template>
+              <span>{{ item.title }}</span>
+            </v-tooltip>
+            
+            <!-- Fallback button for mobile or when tooltip is not used -->
             <v-btn
+              v-if="isMobile"
               :size="buttonSize"
               variant="flat"
               class="menu-item"
@@ -49,19 +73,6 @@
             >
               <v-icon :size="iconSize">{{ item.icon }}</v-icon>
             </v-btn>
-            
-            <!-- Tooltip -->
-            <v-tooltip
-              v-if="!isMobile"
-              :model-value="hoveredItem === item"
-              location="end"
-              :offset="10"
-            >
-              <template v-slot:activator="{ props }">
-                <div v-bind="props"></div>
-              </template>
-              <span>{{ item.title }}</span>
-            </v-tooltip>
           </div>
         </div>
 
@@ -437,6 +448,9 @@ export default {
 .menu-item-wrapper {
   position: relative;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Menu Item Buttons */
