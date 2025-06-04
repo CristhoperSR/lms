@@ -685,7 +685,7 @@ export default {
   overflow: hidden;
 }
 
-/* Main Content */
+/* Main Content - SIN MARGEN SUPERIOR PARA PEGARSE AL NAVBAR */
 .main-content {
   background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
   transition: margin-left 0.3s ease;
@@ -698,20 +698,22 @@ export default {
 
 .main-content-tablet {
   margin-left: 0 !important;
-  margin-top: 72px; /* Altura del navbar */
+  margin-top: 0 !important;
 }
 
 .main-content-desktop {
   margin-left: 100px !important;
-  margin-top: 72px; /* Altura del navbar */
+  margin-top: 0 !important;
 }
 
+/* Page Header - Pegado al navbar */
 .page-header {
   background: white;
   padding: 28px 36px;
   border-bottom: 1px solid #e0e0e0;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   border-radius: 0 0 20px 20px;
+  margin-top: 0;
 }
 
 .page-title {
@@ -736,7 +738,7 @@ export default {
 
 /* Responsive Design */
 
-/* Mobile (xs) */
+/* Mobile (xs) - max-width: 599px */
 @media (max-width: 599px) {
   .content-wrapper {
     padding: 20px 16px;
@@ -752,7 +754,7 @@ export default {
   }
 }
 
-/* Small Mobile (xxs) */
+/* Small Mobile (xxs) - max-width: 375px */
 @media (max-width: 375px) {
   .content-wrapper {
     padding: 16px 12px;
@@ -761,9 +763,17 @@ export default {
   .mobile-app-bar {
     padding: 0 8px;
   }
+  
+  .page-header {
+    padding: 16px 12px;
+  }
+  
+  .page-title {
+    font-size: 22px;
+  }
 }
 
-/* Tablet (sm-md) */
+/* Tablet (sm-md) - 600px to 1023px */
 @media (min-width: 600px) and (max-width: 1023px) {
   .content-wrapper {
     padding: 24px 24px;
@@ -779,7 +789,23 @@ export default {
   }
 }
 
-/* Large Desktop (xl+) */
+/* Desktop (lg) - 1024px to 1199px */
+@media (min-width: 1024px) and (max-width: 1199px) {
+  .main-content-desktop {
+    margin-left: 100px !important;
+    margin-top: 0 !important;
+  }
+  
+  .content-wrapper {
+    padding: 28px 32px;
+  }
+  
+  .page-header {
+    padding: 28px 32px;
+  }
+}
+
+/* Large Desktop (xl+) - min-width: 1200px */
 @media (min-width: 1200px) {
   .sidebar-curved {
     width: 85px;
@@ -792,6 +818,7 @@ export default {
   
   .main-content-desktop {
     margin-left: 105px !important;
+    margin-top: 0 !important;
   }
   
   .logo-circle {
@@ -809,6 +836,29 @@ export default {
   
   .menu-items {
     gap: 18px;
+  }
+  
+  .content-wrapper {
+    padding: 32px 40px;
+  }
+  
+  .page-header {
+    padding: 32px 40px;
+  }
+}
+
+/* Extra Large Desktop (xxl+) - min-width: 1400px */
+@media (min-width: 1400px) {
+  .content-wrapper {
+    padding: 36px 48px;
+  }
+  
+  .page-header {
+    padding: 36px 48px;
+  }
+  
+  .page-title {
+    font-size: 36px;
   }
 }
 
