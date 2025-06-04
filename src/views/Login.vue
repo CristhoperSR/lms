@@ -55,7 +55,7 @@ export default {
   name: 'LoginForm',
   setup() {
     const router = useRouter()
-
+    
     // Reactive variables
     const showDialog = ref(true)
     const loading = ref(false)
@@ -91,9 +91,12 @@ export default {
         await new Promise(resolve => setTimeout(resolve, 1500))
         console.log('Simulando login con Google...')
         showDialog.value = false
+
+        // Redirección al layout principal
         setTimeout(() => {
-          router.push('/asistence')
+          router.push('/app/calendario')
         }, 300)
+
       } catch (error) {
         console.error('Error en el login:', error)
       } finally {
