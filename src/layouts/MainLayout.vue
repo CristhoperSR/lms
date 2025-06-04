@@ -1,7 +1,10 @@
 <template>
   <v-app>
-    <!-- Curved Side Navigation -->
-    <div v-if="!isMobile" class="sidebar-container">
+    <!-- Modern Navbar - Solo en desktop y tablet -->
+    <ModernNavbar v-if="!isMobile" />
+
+    <!-- Curved Side Navigation - Solo desktop -->
+    <div v-if="isDesktop" class="sidebar-container">
       <div class="sidebar-curved">
         <!-- Logo Section -->
         <div class="logo-section">
@@ -38,7 +41,6 @@
             class="menu-item-wrapper"
           >
             <v-tooltip
-              v-if="!isMobile"
               :model-value="hoveredItem === item"
               location="end"
               :offset="10"
@@ -60,19 +62,6 @@
               </template>
               <span>{{ item.title }}</span>
             </v-tooltip>
-            
-            <!-- Fallback button for mobile or when tooltip is not used -->
-            <v-btn
-              v-if="isMobile"
-              :size="buttonSize"
-              variant="flat"
-              class="menu-item"
-              :class="{ 'active': $route.name === item.name }"
-              @click="navigateTo(item.route)"
-              :ripple="false"
-            >
-              <v-icon :size="iconSize">{{ item.icon }}</v-icon>
-            </v-btn>
           </div>
         </div>
 
@@ -123,7 +112,8 @@
             <template v-slot:prepend>
               <v-icon size="24">mdi-account</v-icon>
             </template>
-            <v-list-item-title>Usuario</v-list-item-title>
+            <v-list-item-title>{{ userName }}</v-list-item-title>
+            <v-list-item-subtitle>{{ userRole }}</v-list-item-subtitle>
           </v-list-item>
         </div>
 
@@ -156,7 +146,7 @@
       </div>
     </v-navigation-drawer>
 
-    <!-- Mobile Menu Toggle -->
+    <!-- Mobile App Bar -->
     <v-app-bar
       v-if="isMobile"
       :height="56"
@@ -167,10 +157,87 @@
       <v-toolbar-title class="mobile-title">
         {{ currentPageTitle }}
       </v-toolbar-title>
+      
+      <!-- Mobile Actions -->
+      <template v-slot:append>
+        <!-- Notifications -->
+        <v-btn
+          variant="text"
+          icon
+          size="small"
+          class="mobile-action-btn"
+        >
+          <v-badge
+            :content="notificationCount"
+            :model-value="notificationCount > 0"
+            color="error"
+            overlap
+          >
+            <v-icon size="20">mdi-bell-outline</v-icon>
+          </v-badge>
+        </v-btn>
+
+        <!-- User Menu Mobile -->
+        <v-menu offset-y>
+          <template v-slot:activator="{ props }">
+            <v-btn
+              v-bind="props"
+              variant="text"
+              icon
+              size="small"
+              class="mobile-action-btn"
+            >
+              <v-avatar size="28">
+                <v-icon size="16">mdi-account</v-icon>
+              </v-avatar>
+            </v-btn>
+          </template>
+
+          <v-list class="mobile-user-menu" min-width="180">
+            <v-list-item density="compact">
+              <v-list-item-title class="text-caption font-weight-bold">{{ userName }}</v-list-item-title>
+              <v-list-item-subtitle class="text-caption">{{ userRole }}</v-list-item-subtitle>
+            </v-list-item>
+            
+            <v-divider />
+            
+            <v-list-item @click="viewProfile" density="compact">
+              <template v-slot:prepend>
+                <v-icon size="18">mdi-account-circle</v-icon>
+              </template>
+              <v-list-item-title class="text-sm">Mi Perfil</v-list-item-title>
+            </v-list-item>
+            
+            <v-list-item @click="openSettings" density="compact">
+              <template v-slot:prepend>
+                <v-icon size="18">mdi-cog</v-icon>
+              </template>
+              <v-list-item-title class="text-sm">Configuración</v-list-item-title>
+            </v-list-item>
+
+            <v-divider />
+
+            <v-list-item @click="logout" class="logout-item" density="compact">
+              <template v-slot:prepend>
+                <v-icon color="error" size="18">mdi-logout</v-icon>
+              </template>
+              <v-list-item-title class="text-error text-sm">Cerrar Sesión</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+      </template>
     </v-app-bar>
 
     <!-- Main Content -->
-    <v-main class="main-content" :class="{ 'main-content-mobile': isMobile }">
+    <v-main 
+      class="main-content" 
+      :class="{ 
+        'main-content-mobile': isMobile,
+        'main-content-tablet': isTablet,
+        'main-content-desktop': isDesktop,
+        'main-content-with-navbar': !isMobile 
+      }"
+    >
       <!-- Page Header - Hidden on mobile -->
       <div v-if="!isMobile" class="page-header">
         <div class="breadcrumb-section">
@@ -196,20 +263,24 @@
 </template>
 
 <script>
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useDisplay } from 'vuetify'
+import ModernNavbar from './ModernNavbar.vue'
 
 export default {
   name: 'MainLayout',
+  components: {
+    ModernNavbar
+  },
   setup() {
     const route = useRoute()
     const router = useRouter()
-    const { mobile, smAndDown, mdAndDown } = useDisplay()
+    const { mobile, mdAndDown, lgAndUp } = useDisplay()
     
     const hoveredItem = ref(null)
-    const drawer = ref(true)
-    const windowWidth = ref(window.innerWidth)
+    const drawer = ref(false)
+    const notificationCount = ref(3)
 
     const menuItems = ref([
       {
@@ -253,29 +324,32 @@ export default {
     // Computed properties for responsive design
     const isMobile = computed(() => mobile.value)
     const isTablet = computed(() => mdAndDown.value && !mobile.value)
+    const isDesktop = computed(() => lgAndUp.value)
+
+    const userName = computed(() => 'Juan Pérez')
+    const userRole = computed(() => 'DOCENTE')
 
     const sidebarWidth = computed(() => {
-      if (mobile.value) return 280
-      if (smAndDown.value) return 70
-      if (mdAndDown.value) return 75
+      if (isMobile.value) return 280
+      if (isTablet.value) return 0 // No sidebar en tablet
       return 80
     })
 
     const buttonSize = computed(() => {
-      if (mobile.value) return 'default'
-      if (smAndDown.value) return 'small'
+      if (isMobile.value) return 'default'
+      if (isTablet.value) return 'small'
       return 'default'
     })
 
     const iconSize = computed(() => {
-      if (mobile.value) return 24
-      if (smAndDown.value) return 20
+      if (isMobile.value) return 24
+      if (isTablet.value) return 20
       return 22
     })
 
     const logoSize = computed(() => {
-      if (mobile.value) return 32
-      if (smAndDown.value) return 24
+      if (isMobile.value) return 32
+      if (isTablet.value) return 24
       return 28
     })
 
@@ -298,37 +372,36 @@ export default {
     ])
 
     const setHoveredItem = (item) => {
-      if (!mobile.value) {
+      if (!isMobile.value) {
         hoveredItem.value = item
       }
     }
 
     const navigateTo = (routePath) => {
       router.push(routePath)
-      if (mobile.value) {
+      if (isMobile.value) {
         drawer.value = false
       }
     }
 
     const logout = () => {
       router.push('/login')
-      if (mobile.value) {
+      if (isMobile.value) {
         drawer.value = false
       }
     }
 
-    const handleResize = () => {
-      windowWidth.value = window.innerWidth
+    const viewProfile = () => {
+      router.push('/app/perfil')
+    }
+
+    const openSettings = () => {
+      router.push('/app/configuracion')
     }
 
     onMounted(() => {
-      window.addEventListener('resize', handleResize)
       // Initialize drawer state based on screen size
-      drawer.value = !mobile.value
-    })
-
-    onUnmounted(() => {
-      window.removeEventListener('resize', handleResize)
+      drawer.value = false
     })
 
     return {
@@ -339,26 +412,32 @@ export default {
       breadcrumbs,
       isMobile,
       isTablet,
+      isDesktop,
+      userName,
+      userRole,
+      notificationCount,
       sidebarWidth,
       buttonSize,
       iconSize,
       logoSize,
       setHoveredItem,
       navigateTo,
-      logout
+      logout,
+      viewProfile,
+      openSettings
     }
   }
 }
 </script>
 
 <style scoped>
-/* Sidebar Container - Desktop */
+/* Sidebar Container - Solo Desktop */
 .sidebar-container {
   position: fixed;
   top: 0;
   left: 0;
   height: 100vh;
-  z-index: 1000;
+  z-index: 999;
 }
 
 .sidebar-curved {
@@ -583,15 +662,48 @@ export default {
   background: rgba(255, 71, 87, 0.2) !important;
 }
 
+/* Mobile App Bar */
+.mobile-app-bar {
+  background: linear-gradient(135deg, #9E52D8 0%, #B366E8 50%, #9E52D8 100%) !important;
+  color: white !important;
+}
+
+.mobile-title {
+  color: white !important;
+  font-weight: 600;
+}
+
+.mobile-action-btn {
+  color: white !important;
+  margin-right: 4px;
+}
+
+.mobile-user-menu {
+  border-radius: 12px !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
 /* Main Content */
 .main-content {
   background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-  margin-left: 100px;
   transition: margin-left 0.3s ease;
 }
 
 .main-content-mobile {
   margin-left: 0 !important;
+  margin-top: 0 !important;
+}
+
+.main-content-tablet {
+  margin-left: 0 !important;
+  margin-top: 72px; /* Altura del navbar */
+}
+
+.main-content-desktop {
+  margin-left: 100px !important;
+  margin-top: 72px; /* Altura del navbar */
 }
 
 .page-header {
@@ -619,28 +731,12 @@ export default {
 
 .content-wrapper {
   padding: 28px 36px;
-  min-height: calc(100vh - 140px);
-}
-
-/* Mobile App Bar */
-.mobile-app-bar {
-  background: linear-gradient(135deg, #9E52D8 0%, #B366E8 50%, #9E52D8 100%) !important;
-  color: white !important;
-}
-
-.mobile-title {
-  color: white !important;
-  font-weight: 600;
-}
-
-.content-wrapper {
-  padding: 28px 36px;
-  min-height: calc(100vh - 140px);
+  min-height: calc(100vh - 200px);
 }
 
 /* Responsive Design */
 
-/* Mobile */
+/* Mobile (xs) */
 @media (max-width: 599px) {
   .content-wrapper {
     padding: 20px 16px;
@@ -656,51 +752,34 @@ export default {
   }
 }
 
-/* Tablet */
-@media (min-width: 600px) and (max-width: 1024px) {
-  .sidebar-curved {
-    width: 75px;
-    height: 75vh;
-    max-height: 650px;
-    min-height: 500px;
-    border-radius: 0 40px 40px 0;
-    padding: 18px 0;
+/* Small Mobile (xxs) */
+@media (max-width: 375px) {
+  .content-wrapper {
+    padding: 16px 12px;
   }
   
-  .main-content {
-    margin-left: 90px;
-  }
-  
-  .logo-circle {
-    width: 47px;
-    height: 47px;
-    border-radius: 15px;
-  }
-  
-  .menu-item {
-    width: 47px !important;
-    height: 47px !important;
-    min-width: 47px !important;
-    border-radius: 15px !important;
-  }
-  
-  .menu-items {
-    gap: 14px;
+  .mobile-app-bar {
+    padding: 0 8px;
   }
 }
 
-/* Small Desktop */
-@media (min-width: 1025px) and (max-width: 1199px) {
-  .sidebar-curved {
-    width: 80px;
+/* Tablet (sm-md) */
+@media (min-width: 600px) and (max-width: 1023px) {
+  .content-wrapper {
+    padding: 24px 24px;
+    min-height: calc(100vh - 180px);
   }
   
-  .main-content {
-    margin-left: 100px;
+  .page-header {
+    padding: 24px 24px;
+  }
+  
+  .page-title {
+    font-size: 28px;
   }
 }
 
-/* Large Desktop */
+/* Large Desktop (xl+) */
 @media (min-width: 1200px) {
   .sidebar-curved {
     width: 85px;
@@ -711,8 +790,8 @@ export default {
     padding: 22px 0;
   }
   
-  .main-content {
-    margin-left: 105px;
+  .main-content-desktop {
+    margin-left: 105px !important;
   }
   
   .logo-circle {
