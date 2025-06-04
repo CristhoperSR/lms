@@ -1,79 +1,59 @@
 <template>
   <v-app>
-    <!-- Side Navigation -->
-    <v-navigation-drawer
-      v-model="drawer"
-      app
-      permanent
-      width="280"
-      class="sidemenu-drawer"
-    >
-      <!-- Header con logo -->
-      <div class="drawer-header">
+    <!-- Curved Side Navigation -->
+    <div class="sidebar-container">
+      <div class="sidebar-curved">
+        <!-- Logo Section -->
         <div class="logo-section">
-          <img src="/img/berry.png" alt="Berry Logo" class="header-logo">
-          <span class="app-name">Berry</span>
+          <div class="logo-circle">
+            <img src="/img/berry.png" alt="Berry Logo" class="logo-img">
+          </div>
         </div>
-      </div>
 
-      <!-- Menu Items -->
-      <div class="menu-section">
-        <v-list nav class="menu-list">
-          <v-list-item
+        <!-- Menu Items -->
+        <div class="menu-items">
+          <div
             v-for="item in menuItems"
             :key="item.name"
-            :to="item.route"
-            :class="{ 'active-item': $route.name === item.name }"
-            class="menu-item"
+            class="menu-item-wrapper"
             @mouseenter="setHoveredItem(item)"
             @mouseleave="setHoveredItem(null)"
+            @click="navigateTo(item.route)"
           >
-            <template v-slot:prepend>
-              <div class="icon-container">
-                <v-icon :icon="item.icon" size="20"></v-icon>
-              </div>
-            </template>
-
-            <v-list-item-title class="item-title">
-              {{ item.title }}
-            </v-list-item-title>
-
-            <!-- Tooltip on hover -->
-            <v-tooltip
+            <div 
+              class="menu-item"
+              :class="{ 'active': $route.name === item.name }"
+            >
+              <v-icon :icon="item.icon" size="24"></v-icon>
+            </div>
+            
+            <!-- Tooltip -->
+            <div 
               v-if="hoveredItem === item"
-              activator="parent"
-              location="end"
-              :text="item.title"
-            ></v-tooltip>
-          </v-list-item>
-        </v-list>
-      </div>
-
-      <!-- User Section -->
-      <template v-slot:append>
-        <div class="user-section">
-          <v-divider class="mb-4"></v-divider>
-          <v-list-item class="user-item">
-            <template v-slot:prepend>
-              <v-avatar color="primary" size="32">
-                <v-icon icon="mdi-account"></v-icon>
-              </v-avatar>
-            </template>
-            <v-list-item-title class="user-name">Usuario</v-list-item-title>
-            <v-list-item-subtitle class="user-role">Administrador</v-list-item-subtitle>
-          </v-list-item>
-          
-          <v-btn
-            icon="mdi-logout"
-            variant="text"
-            color="error"
-            size="small"
-            class="logout-btn"
-            @click="logout"
-          ></v-btn>
+              class="tooltip"
+            >
+              {{ item.title }}
+              <div class="tooltip-arrow"></div>
+            </div>
+          </div>
         </div>
-      </template>
-    </v-navigation-drawer>
+
+        <!-- User Section -->
+        <div class="user-section">
+          <div class="menu-item-wrapper">
+            <div class="menu-item">
+              <v-icon icon="mdi-account" size="24"></v-icon>
+            </div>
+          </div>
+          
+          <div class="menu-item-wrapper" @click="logout">
+            <div class="menu-item logout-item">
+              <v-icon icon="mdi-logout" size="24"></v-icon>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Main Content -->
     <v-main class="main-content">
@@ -110,7 +90,6 @@ export default {
   setup() {
     const route = useRoute()
     const router = useRouter()
-    const drawer = ref(true)
     const hoveredItem = ref(null)
 
     const menuItems = ref([
@@ -174,17 +153,21 @@ export default {
       hoveredItem.value = item
     }
 
+    const navigateTo = (route) => {
+      router.push(route)
+    }
+
     const logout = () => {
       router.push('/login')
     }
 
     return {
-      drawer,
       hoveredItem,
       menuItems,
       currentPageTitle,
       breadcrumbs,
       setHoveredItem,
+      navigateTo,
       logout
     }
   }
@@ -192,140 +175,148 @@ export default {
 </script>
 
 <style scoped>
-.sidemenu-drawer {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-right: none !important;
+.sidebar-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  z-index: 1000;
 }
 
-.drawer-header {
-  padding: 24px 20px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.logo-section {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.header-logo {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.2);
-}
-
-.app-name {
-  color: white;
-  font-size: 24px;
-  font-weight: 600;
-  letter-spacing: 1px;
-}
-
-.menu-section {
-  padding: 16px 0;
-}
-
-.menu-list {
-  background: transparent;
-}
-
-.menu-item {
-  margin: 4px 12px;
-  border-radius: 12px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+.sidebar-curved {
+  width: 80px;
+  height: 100vh;
+  background: #9E52D8;
   position: relative;
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 0;
 }
 
-.menu-item::before {
+.sidebar-curved::after {
   content: '';
   position: absolute;
   top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(255, 255, 255, 0.1);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  border-radius: 12px;
+  right: -30px;
+  width: 30px;
+  height: 100%;
+  background: #9E52D8;
+  border-radius: 0 50px 50px 0;
 }
 
-.menu-item:hover::before {
-  opacity: 1;
+.logo-section {
+  margin-bottom: 30px;
 }
 
-.menu-item.active-item {
-  background: rgba(255, 255, 255, 0.15) !important;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.menu-item.active-item::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 4px;
-  height: 24px;
-  background: white;
-  border-radius: 0 4px 4px 0;
-}
-
-.icon-container {
-  width: 40px;
-  height: 40px;
+.logo-circle {
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 10px;
+  backdrop-filter: blur(10px);
+}
+
+.logo-img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.menu-items {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 1;
+  align-items: center;
+}
+
+.menu-item-wrapper {
+  position: relative;
+  cursor: pointer;
+}
+
+.menu-item {
+  width: 50px;
+  height: 50px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: rgba(255, 255, 255, 0.1);
-  margin-right: 12px;
-}
-
-.menu-item.active-item .icon-container {
-  background: rgba(255, 255, 255, 0.2);
-}
-
-.item-title {
-  color: rgba(255, 255, 255, 0.9);
-  font-weight: 500;
-  font-size: 14px;
-}
-
-.menu-item.active-item .item-title {
   color: white;
-  font-weight: 600;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.menu-item:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateX(-3px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.menu-item.active {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateX(-5px);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
+}
+
+.tooltip {
+  position: absolute;
+  left: 65px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  white-space: nowrap;
+  z-index: 1001;
+  animation: fadeIn 0.2s ease;
+}
+
+.tooltip-arrow {
+  position: absolute;
+  left: -5px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-right: 5px solid rgba(0, 0, 0, 0.8);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-50%) translateX(-5px); }
+  to { opacity: 1; transform: translateY(-50%) translateX(0); }
 }
 
 .user-section {
-  padding: 16px;
-  background: rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.user-item {
-  color: white;
-  margin-bottom: 8px;
+.logout-item {
+  background: rgba(255, 0, 0, 0.2) !important;
 }
 
-.user-name {
-  font-weight: 500;
-  font-size: 14px;
-}
-
-.user-role {
-  font-size: 12px;
-  opacity: 0.8;
-}
-
-.logout-btn {
-  width: 100%;
-  margin-top: 8px;
+.logout-item:hover {
+  background: rgba(255, 0, 0, 0.3) !important;
 }
 
 .main-content {
   background: #f8f9fa;
+  margin-left: 110px;
 }
 
 .page-header {
@@ -353,8 +344,12 @@ export default {
 
 /* Responsive */
 @media (max-width: 960px) {
-  .sidemenu-drawer {
-    width: 260px !important;
+  .sidebar-curved {
+    width: 70px;
+  }
+  
+  .main-content {
+    margin-left: 100px;
   }
   
   .content-wrapper {
@@ -363,6 +358,16 @@ export default {
   
   .page-header {
     padding: 16px 20px;
+  }
+  
+  .menu-item {
+    width: 45px;
+    height: 45px;
+  }
+  
+  .logo-circle {
+    width: 45px;
+    height: 45px;
   }
 }
 </style>
