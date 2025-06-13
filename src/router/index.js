@@ -6,6 +6,7 @@ import AsistenciasView from '../views/Asistencia/Asistencias.vue'
 import IncidenciasView from '../views/Incidencias/Incidencias.vue'
 import FirmaView from '../views/Firma/Firma.vue'
 import CursosView from '../views/Cursos/Cursos.vue'
+import CursoDetalleView from '../views/CursoDetalle/CursoDetalle.vue'
 import CreacionMasivaView from '../views/CreacionMasiva/CreacionMasiva.vue'
 
 const routes = [
@@ -50,6 +51,12 @@ const routes = [
         path: 'cursos',
         name: 'Cursos',
         component: CursosView
+      },
+      {
+        path: 'cursos/:id',
+        name: 'CursoDetalle',
+        component: CursoDetalleView,
+        props: true
       },
       {
         path: 'creacion-masiva',

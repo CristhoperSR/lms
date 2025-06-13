@@ -435,11 +435,15 @@
 <script setup>
 import { ref, onMounted, computed, watch } from 'vue'
 import { useDisplay } from 'vuetify'
+import { useRouter } from 'vue-router'
 import './cursos.css'
 
 // Vuetify display composable for responsive design
 const { mobile } = useDisplay()
 const isMobile = computed(() => mobile.value)
+
+// Router
+const router = useRouter()
 
 // Reactive data
 const showMobileFilters = ref(false)
@@ -698,7 +702,11 @@ const getSubjectColor = (subject) => {
 
 const viewCourse = (course) => {
   console.log('Viewing course:', course)
-  // Implement navigation logic here
+  // Navegar a la ruta del detalle del curso
+  router.push({ 
+    name: 'CursoDetalle', 
+    params: { id: course.id.toString() } 
+  })
 }
 
 const clearFilters = () => {
