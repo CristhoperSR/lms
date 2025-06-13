@@ -1,0 +1,230 @@
+/* Contenedor principal - más ancho y centrado */
+.courses-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 20px !important;
+  padding-bottom: 40px;
+  padding-left: 8px !important;
+  padding-right: 8px !important;
+}
+
+.courses-card {
+  max-width: 1600px; /* Aumentado de 1400px a 1600px */
+  width: 100%;
+  margin: 0 auto;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.courses-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.filter-select {
+  transition: all 0.3s ease;
+}
+
+.filter-select:hover {
+  transform: translateY(-1px);
+}
+
+.search-btn {
+  transition: all 0.3s ease;
+}
+
+.search-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.courses-table {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.courses-table :deep(.v-data-table__th) {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  color: #495057;
+}
+
+.courses-table :deep(.v-data-table__td) {
+  padding: 12px 16px;
+}
+
+.campus-cell, .subject-cell {
+  transition: all 0.2s ease;
+}
+
+.campus-cell:hover, .subject-cell:hover {
+  transform: translateX(2px);
+}
+
+.actions-cell .v-btn {
+  transition: all 0.3s ease;
+}
+
+.actions-cell .v-btn:hover {
+  transform: scale(1.1);
+}
+
+.results-alert {
+  border-left: 4px solid #4caf50;
+}
+
+.empty-state {
+  background: linear-gradient(45deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 12px;
+  margin: 16px;
+}
+
+.course-card {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.course-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+
+.mobile-courses {
+  width: 100%;
+}
+
+/* Estilos para el paginador mejorado */
+.pagination-container {
+  margin-top: 2rem;
+  width: 100%;
+}
+
+.pagination-card {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.custom-pagination {
+  margin: 0;
+}
+
+.custom-pagination :deep(.v-pagination__item) {
+  margin: 0 2px;
+  min-width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.custom-pagination :deep(.v-pagination__item:hover) {
+  transform: scale(1.1);
+}
+
+.custom-pagination :deep(.v-pagination__item--is-active) {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  color: white !important;
+  transform: scale(1.15);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.custom-pagination :deep(.v-pagination__prev),
+.custom-pagination :deep(.v-pagination__next) {
+  min-width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.custom-pagination :deep(.v-pagination__prev:hover),
+.custom-pagination :deep(.v-pagination__next:hover) {
+  background-color: rgba(102, 126, 234, 0.1);
+  transform: scale(1.1);
+}
+
+/* Mobile specific styles */
+@media (max-width: 960px) {
+  .courses-container {
+    padding-top: 10px !important;
+    align-items: flex-start;
+  }
+  
+  .courses-header {
+    text-align: center;
+  }
+  
+  .filter-select {
+    margin-bottom: 0;
+  }
+  
+  .course-card {
+    margin-bottom: 1rem;
+  }
+
+  .courses-card {
+    margin: 0 8px;
+  }
+
+  .pagination-container {
+    margin-top: 1.5rem;
+  }
+
+  .custom-pagination :deep(.v-pagination__item) {
+    min-width: 36px;
+    height: 36px;
+    font-size: 0.875rem;
+  }
+
+  .pagination-card {
+    margin: 0 4px;
+  }
+}
+
+/* Tablet specific styles */
+@media (min-width: 961px) and (max-width: 1264px) {
+  .courses-container {
+    padding-top: 15px !important;
+  }
+  
+  .courses-table :deep(.v-data-table__td) {
+    padding: 8px 12px;
+    font-size: 0.875rem;
+  }
+}
+
+/* Desktop specific styles */
+@media (min-width: 1265px) {
+  .courses-container {
+    padding-top: 20px !important;
+  }
+}
+
+/* Animation classes */
+.v-enter-active, .v-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.v-enter-from, .v-leave-to {
+  opacity: 0;
+}
+
+/* Animaciones adicionales para el paginador */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.custom-pagination :deep(.v-pagination__item--is-active) {
+  animation: pulse 2s infinite;
+}
+
+/* Mejoras visuales para los controles de navegación */
+.pagination-container .v-btn {
+  transition: all 0.3s ease;
+}
+
+.pagination-container .v-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}

@@ -154,9 +154,6 @@
       class="mobile-app-bar"
     >
       <v-app-bar-nav-icon @click="drawer = !drawer" />
-      <v-toolbar-title class="mobile-title">
-        {{ currentPageTitle }}
-      </v-toolbar-title>
       
       <!-- Mobile Actions -->
       <template v-slot:append>
@@ -238,22 +235,6 @@
         'main-content-with-navbar': !isMobile 
       }"
     >
-      <!-- Page Header - Hidden on mobile -->
-      <div v-if="!isMobile" class="page-header">
-        <div class="breadcrumb-section">
-          <h1 class="page-title">{{ currentPageTitle }}</h1>
-          <v-breadcrumbs
-            :items="breadcrumbs"
-            class="pa-0"
-            density="compact"
-          >
-            <template v-slot:divider>
-              <v-icon size="14">mdi-chevron-right</v-icon>
-            </template>
-          </v-breadcrumbs>
-        </div>
-      </div>
-
       <!-- Router View -->
       <div class="content-wrapper">
         <router-view />
@@ -264,7 +245,7 @@
 
 <script>
 import { ref, computed, onMounted } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { useDisplay } from 'vuetify'
 import ModernNavbar from '../Navbar/ModernNavbar.vue'
 import './Mainlayout.css'
@@ -275,7 +256,6 @@ export default {
     ModernNavbar
   },
   setup() {
-    const route = useRoute()
     const router = useRouter()
     const { mobile, mdAndDown, lgAndUp } = useDisplay()
     
@@ -354,24 +334,6 @@ export default {
       return 28
     })
 
-    const currentPageTitle = computed(() => {
-      const currentItem = menuItems.value.find(item => item.name === route.name)
-      return currentItem ? currentItem.title : 'Dashboard'
-    })
-
-    const breadcrumbs = computed(() => [
-      {
-        title: 'Inicio',
-        disabled: false,
-        href: '/app'
-      },
-      {
-        title: currentPageTitle.value,
-        disabled: true,
-        href: route.path
-      }
-    ])
-
     const setHoveredItem = (item) => {
       if (!isMobile.value) {
         hoveredItem.value = item
@@ -409,8 +371,6 @@ export default {
       drawer,
       hoveredItem,
       menuItems,
-      currentPageTitle,
-      breadcrumbs,
       isMobile,
       isTablet,
       isDesktop,
