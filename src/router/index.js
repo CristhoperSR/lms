@@ -1,12 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import LoginView from '../views/Login.vue'
-import MainLayout from '../layouts/MainLayout.vue'
-import CalendarioView from '../views/Calendario.vue'
-import AsistenciasView from '../views/Asistencias.vue'
-import IncidenciasView from '../views/Incidencias.vue'
-import FirmaView from '../views/Firma.vue'
-import CursosView from '../views/Cursos.vue'
-import CreacionMasivaView from '../views/CreacionMasiva.vue'
+import LoginView from '../views/Login/Login.vue'
+import MainLayout from '../layouts/Mainlayout/MainLayout.vue'
+import CalendarioView from '../views/Calendario/Calendario.vue'
+import AsistenciasView from '../views/Asistencia/Asistencias.vue'
+import IncidenciasView from '../views/Incidencias/Incidencias.vue'
+import FirmaView from '../views/Firma/Firma.vue'
+import CursosView from '../views/Cursos/Cursos.vue'
+import CreacionMasivaView from '../views/CreacionMasiva/CreacionMasiva.vue'
 
 const routes = [
   {
