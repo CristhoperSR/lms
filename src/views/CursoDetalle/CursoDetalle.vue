@@ -70,24 +70,34 @@
             
             <!-- Flujo de competencias responsive -->
             <div class="competencia-flow">
-              <div class="d-flex align-center justify-center flex-wrap gap-2">
-                <!-- Competencia inicial -->
+              <div class="d-none d-sm-flex align-center justify-center flex-wrap gap-2">
+                <!-- General -->
                 <div class="competencia-item">
-                  <v-avatar 
-                    color="deep-purple" 
-                    :size="$vuetify.display.xs ? 32 : $vuetify.display.sm ? 40 : 48"
-                    class="elevation-3"
-                  >
-                    <span :class="[
-                      'font-weight-bold text-white',
-                      $vuetify.display.xs ? 'text-caption' : 'text-body-1'
-                    ]">C</span>
-                  </v-avatar>
+                  <v-tooltip text="General" location="top">
+                    <template v-slot:activator="{ props }">
+                      <v-btn
+                        v-bind="props"
+                        @click="handleFlowClick('general')"
+                        color="deep-purple"
+                        :variant="selectedFlowItem === 'general' ? 'flat' : 'tonal'"
+                        :size="$vuetify.display.xs ? 'small' : $vuetify.display.sm ? 'default' : 'large'"
+                        class="elevation-3 competencia-btn"
+                        rounded="circle"
+                        :width="$vuetify.display.xs ? 40 : $vuetify.display.sm ? 48 : 56"
+                        :height="$vuetify.display.xs ? 40 : $vuetify.display.sm ? 48 : 56"
+                      >
+                        <span :class="[
+                          'font-weight-bold text-white',
+                          $vuetify.display.xs ? 'text-body-2' : $vuetify.display.sm ? 'text-body-1' : 'text-h6'
+                        ]">G</span>
+                      </v-btn>
+                    </template>
+                  </v-tooltip>
                   <div :class="[
                     'text-center mt-1',
-                    $vuetify.display.xs ? 'text-caption' : 'text-body-2'
+                    $vuetify.display.xs ? 'text-caption' : $vuetify.display.sm ? 'text-body-2' : 'text-body-1'
                   ]">
-                    <div class="font-weight-bold">Competencia</div>
+                    <div class="font-weight-bold">General</div>
                   </div>
                 </div>
 
@@ -95,27 +105,37 @@
                 <v-icon 
                   icon="mdi-arrow-right" 
                   :color="$vuetify.display.xs ? 'grey' : 'primary'" 
-                  :size="$vuetify.display.xs ? 16 : 20"
-                  class="mx-1"
+                  :size="$vuetify.display.xs ? 16 : $vuetify.display.sm ? 20 : 24"
+                  class="mx-1 mx-sm-2"
                 ></v-icon>
 
-                <!-- Capacidades -->
+                <!-- Bimestre 1 -->
                 <div class="competencia-item">
-                  <v-avatar 
-                    color="teal" 
-                    :size="$vuetify.display.xs ? 32 : $vuetify.display.sm ? 40 : 48"
-                    class="elevation-3"
-                  >
-                    <span :class="[
-                      'font-weight-bold text-white',
-                      $vuetify.display.xs ? 'text-caption' : 'text-body-1'
-                    ]">1</span>
-                  </v-avatar>
+                  <v-tooltip text="Bimestre 1" location="top">
+                    <template v-slot:activator="{ props }">
+                      <v-btn
+                        v-bind="props"
+                        @click="handleFlowClick('bimestre1')"
+                        color="teal"
+                        :variant="selectedFlowItem === 'bimestre1' ? 'flat' : 'tonal'"
+                        :size="$vuetify.display.xs ? 'small' : $vuetify.display.sm ? 'default' : 'large'"
+                        class="elevation-3 competencia-btn"
+                        rounded="circle"
+                        :width="$vuetify.display.xs ? 40 : $vuetify.display.sm ? 48 : 56"
+                        :height="$vuetify.display.xs ? 40 : $vuetify.display.sm ? 48 : 56"
+                      >
+                        <span :class="[
+                          'font-weight-bold text-white',
+                          $vuetify.display.xs ? 'text-body-2' : $vuetify.display.sm ? 'text-body-1' : 'text-h6'
+                        ]">1</span>
+                      </v-btn>
+                    </template>
+                  </v-tooltip>
                   <div :class="[
                     'text-center mt-1',
-                    $vuetify.display.xs ? 'text-caption' : 'text-body-2'
+                    $vuetify.display.xs ? 'text-caption' : $vuetify.display.sm ? 'text-body-2' : 'text-body-1'
                   ]">
-                    <div class="font-weight-bold">Capacidades</div>
+                    <div class="font-weight-bold">Bimestre 1</div>
                   </div>
                 </div>
 
@@ -123,27 +143,37 @@
                 <v-icon 
                   icon="mdi-arrow-right" 
                   :color="$vuetify.display.xs ? 'grey' : 'primary'" 
-                  :size="$vuetify.display.xs ? 16 : 20"
-                  class="mx-1"
+                  :size="$vuetify.display.xs ? 16 : $vuetify.display.sm ? 20 : 24"
+                  class="mx-1 mx-sm-2"
                 ></v-icon>
 
-                <!-- Desempeños -->
+                <!-- Bimestre 2 -->
                 <div class="competencia-item">
-                  <v-avatar 
-                    color="teal" 
-                    :size="$vuetify.display.xs ? 32 : $vuetify.display.sm ? 40 : 48"
-                    class="elevation-3"
-                  >
-                    <span :class="[
-                      'font-weight-bold text-white',
-                      $vuetify.display.xs ? 'text-caption' : 'text-body-1'
-                    ]">2</span>
-                  </v-avatar>
+                  <v-tooltip text="Bimestre 2" location="top">
+                    <template v-slot:activator="{ props }">
+                      <v-btn
+                        v-bind="props"
+                        @click="handleFlowClick('bimestre2')"
+                        color="teal"
+                        :variant="selectedFlowItem === 'bimestre2' ? 'flat' : 'tonal'"
+                        :size="$vuetify.display.xs ? 'small' : $vuetify.display.sm ? 'default' : 'large'"
+                        class="elevation-3 competencia-btn"
+                        rounded="circle"
+                        :width="$vuetify.display.xs ? 40 : $vuetify.display.sm ? 48 : 56"
+                        :height="$vuetify.display.xs ? 40 : $vuetify.display.sm ? 48 : 56"
+                      >
+                        <span :class="[
+                          'font-weight-bold text-white',
+                          $vuetify.display.xs ? 'text-body-2' : $vuetify.display.sm ? 'text-body-1' : 'text-h6'
+                        ]">2</span>
+                      </v-btn>
+                    </template>
+                  </v-tooltip>
                   <div :class="[
                     'text-center mt-1',
-                    $vuetify.display.xs ? 'text-caption' : 'text-body-2'
+                    $vuetify.display.xs ? 'text-caption' : $vuetify.display.sm ? 'text-body-2' : 'text-body-1'
                   ]">
-                    <div class="font-weight-bold">Desempeños</div>
+                    <div class="font-weight-bold">Bimestre 2</div>
                   </div>
                 </div>
 
@@ -151,27 +181,37 @@
                 <v-icon 
                   icon="mdi-arrow-right" 
                   :color="$vuetify.display.xs ? 'grey' : 'primary'" 
-                  :size="$vuetify.display.xs ? 16 : 20"
-                  class="mx-1"
+                  :size="$vuetify.display.xs ? 16 : $vuetify.display.sm ? 20 : 24"
+                  class="mx-1 mx-sm-2"
                 ></v-icon>
 
-                <!-- Criterios -->
+                <!-- Bimestre 3 -->
                 <div class="competencia-item">
-                  <v-avatar 
-                    color="teal" 
-                    :size="$vuetify.display.xs ? 32 : $vuetify.display.sm ? 40 : 48"
-                    class="elevation-3"
-                  >
-                    <span :class="[
-                      'font-weight-bold text-white',
-                      $vuetify.display.xs ? 'text-caption' : 'text-body-1'
-                    ]">3</span>
-                  </v-avatar>
+                  <v-tooltip text="Bimestre 3" location="top">
+                    <template v-slot:activator="{ props }">
+                      <v-btn
+                        v-bind="props"
+                        @click="handleFlowClick('bimestre3')"
+                        color="teal"
+                        :variant="selectedFlowItem === 'bimestre3' ? 'flat' : 'tonal'"
+                        :size="$vuetify.display.xs ? 'small' : $vuetify.display.sm ? 'default' : 'large'"
+                        class="elevation-3 competencia-btn"
+                        rounded="circle"
+                        :width="$vuetify.display.xs ? 40 : $vuetify.display.sm ? 48 : 56"
+                        :height="$vuetify.display.xs ? 40 : $vuetify.display.sm ? 48 : 56"
+                      >
+                        <span :class="[
+                          'font-weight-bold text-white',
+                          $vuetify.display.xs ? 'text-body-2' : $vuetify.display.sm ? 'text-body-1' : 'text-h6'
+                        ]">3</span>
+                      </v-btn>
+                    </template>
+                  </v-tooltip>
                   <div :class="[
                     'text-center mt-1',
-                    $vuetify.display.xs ? 'text-caption' : 'text-body-2'
+                    $vuetify.display.xs ? 'text-caption' : $vuetify.display.sm ? 'text-body-2' : 'text-body-1'
                   ]">
-                    <div class="font-weight-bold">Criterios</div>
+                    <div class="font-weight-bold">Bimestre 3</div>
                   </div>
                 </div>
 
@@ -179,58 +219,186 @@
                 <v-icon 
                   icon="mdi-arrow-right" 
                   :color="$vuetify.display.xs ? 'grey' : 'primary'" 
-                  :size="$vuetify.display.xs ? 16 : 20"
-                  class="mx-1"
+                  :size="$vuetify.display.xs ? 16 : $vuetify.display.sm ? 20 : 24"
+                  class="mx-1 mx-sm-2"
                 ></v-icon>
 
-                <!-- Instrumentos -->
+                <!-- Bimestre 4 -->
                 <div class="competencia-item">
-                  <v-avatar 
-                    color="teal" 
-                    :size="$vuetify.display.xs ? 32 : $vuetify.display.sm ? 40 : 48"
-                    class="elevation-3"
-                  >
-                    <span :class="[
-                      'font-weight-bold text-white',
-                      $vuetify.display.xs ? 'text-caption' : 'text-body-1'
-                    ]">4</span>
-                  </v-avatar>
+                  <v-tooltip text="Bimestre 4" location="top">
+                    <template v-slot:activator="{ props }">
+                      <v-btn
+                        v-bind="props"
+                        @click="handleFlowClick('bimestre4')"
+                        color="teal"
+                        :variant="selectedFlowItem === 'bimestre4' ? 'flat' : 'tonal'"
+                        :size="$vuetify.display.xs ? 'small' : $vuetify.display.sm ? 'default' : 'large'"
+                        class="elevation-3 competencia-btn"
+                        rounded="circle"
+                        :width="$vuetify.display.xs ? 40 : $vuetify.display.sm ? 48 : 56"
+                        :height="$vuetify.display.xs ? 40 : $vuetify.display.sm ? 48 : 56"
+                      >
+                        <span :class="[
+                          'font-weight-bold text-white',
+                          $vuetify.display.xs ? 'text-body-2' : $vuetify.display.sm ? 'text-body-1' : 'text-h6'
+                        ]">4</span>
+                      </v-btn>
+                    </template>
+                  </v-tooltip>
                   <div :class="[
                     'text-center mt-1',
-                    $vuetify.display.xs ? 'text-caption' : 'text-body-2'
+                    $vuetify.display.xs ? 'text-caption' : $vuetify.display.sm ? 'text-body-2' : 'text-body-1'
                   ]">
-                    <div class="font-weight-bold">Instrumentos</div>
+                    <div class="font-weight-bold">Bimestre 4</div>
                   </div>
                 </div>
               </div>
 
-              <!-- Versión vertical para pantallas muy pequeñas -->
-              <div class="d-flex d-sm-none flex-column align-center mt-3">
-                <div class="d-flex flex-column align-center">
-                  <v-avatar color="deep-purple" size="32" class="elevation-3 mb-1">
-                    <span class="font-weight-bold text-white text-caption">C</span>
-                  </v-avatar>
-                  <v-icon icon="mdi-arrow-down" color="grey" size="16" class="my-1"></v-icon>
-                  
-                  <v-avatar color="teal" size="32" class="elevation-3 mb-1">
-                    <span class="font-weight-bold text-white text-caption">1</span>
-                  </v-avatar>
-                  <v-icon icon="mdi-arrow-down" color="grey" size="16" class="my-1"></v-icon>
-                  
-                  <v-avatar color="teal" size="32" class="elevation-3 mb-1">
-                    <span class="font-weight-bold text-white text-caption">2</span>
-                  </v-avatar>
-                  <v-icon icon="mdi-arrow-down" color="grey" size="16" class="my-1"></v-icon>
-                  
-                  <v-avatar color="teal" size="32" class="elevation-3 mb-1">
-                    <span class="font-weight-bold text-white text-caption">3</span>
-                  </v-avatar>
-                  <v-icon icon="mdi-arrow-down" color="grey" size="16" class="my-1"></v-icon>
-                  
-                  <v-avatar color="teal" size="32" class="elevation-3">
-                    <span class="font-weight-bold text-white text-caption">4</span>
-                  </v-avatar>
+              <!-- Versión horizontal para móviles -->
+              <div class="d-flex d-sm-none align-center justify-start gap-1 pb-2" style="overflow-x: auto;">
+                <!-- General -->
+                <div class="competencia-item flex-shrink-0">
+                  <v-tooltip text="General" location="top">
+                    <template v-slot:activator="{ props }">
+                      <v-btn
+                        v-bind="props"
+                        @click="handleFlowClick('general')"
+                        color="deep-purple"
+                        :variant="selectedFlowItem === 'general' ? 'flat' : 'tonal'"
+                        size="small"
+                        class="elevation-3 competencia-btn"
+                        rounded="circle"
+                        :width="36"
+                        :height="36"
+                      >
+                        <span class="font-weight-bold text-white text-caption">G</span>
+                      </v-btn>
+                    </template>
+                  </v-tooltip>
+                  <div class="text-center mt-1 text-caption">
+                    <div class="font-weight-bold">General</div>
+                  </div>
                 </div>
+
+                <v-icon icon="mdi-arrow-right" color="grey" size="14" class="mx-1 flex-shrink-0"></v-icon>
+
+                <!-- Bimestre 1 -->
+                <div class="competencia-item flex-shrink-0">
+                  <v-tooltip text="Bimestre 1" location="top">
+                    <template v-slot:activator="{ props }">
+                      <v-btn
+                        v-bind="props"
+                        @click="handleFlowClick('bimestre1')"
+                        color="teal"
+                        :variant="selectedFlowItem === 'bimestre1' ? 'flat' : 'tonal'"
+                        size="small"
+                        class="elevation-3 competencia-btn"
+                        rounded="circle"
+                        :width="36"
+                        :height="36"
+                      >
+                        <span class="font-weight-bold text-white text-caption">1</span>
+                      </v-btn>
+                    </template>
+                  </v-tooltip>
+                  <div class="text-center mt-1 text-caption">
+                    <div class="font-weight-bold">Bim. 1</div>
+                  </div>
+                </div>
+
+                <v-icon icon="mdi-arrow-right" color="grey" size="14" class="mx-1 flex-shrink-0"></v-icon>
+
+                <!-- Bimestre 2 -->
+                <div class="competencia-item flex-shrink-0">
+                  <v-tooltip text="Bimestre 2" location="top">
+                    <template v-slot:activator="{ props }">
+                      <v-btn
+                        v-bind="props"
+                        @click="handleFlowClick('bimestre2')"
+                        color="teal"
+                        :variant="selectedFlowItem === 'bimestre2' ? 'flat' : 'tonal'"
+                        size="small"
+                        class="elevation-3 competencia-btn"
+                        rounded="circle"
+                        :width="36"
+                        :height="36"
+                      >
+                        <span class="font-weight-bold text-white text-caption">2</span>
+                      </v-btn>
+                    </template>
+                  </v-tooltip>
+                  <div class="text-center mt-1 text-caption">
+                    <div class="font-weight-bold">Bim. 2</div>
+                  </div>
+                </div>
+
+                <v-icon icon="mdi-arrow-right" color="grey" size="14" class="mx-1 flex-shrink-0"></v-icon>
+
+                <!-- Bimestre 3 -->
+                <div class="competencia-item flex-shrink-0">
+                  <v-tooltip text="Bimestre 3" location="top">
+                    <template v-slot:activator="{ props }">
+                      <v-btn
+                        v-bind="props"
+                        @click="handleFlowClick('bimestre3')"
+                        color="teal"
+                        :variant="selectedFlowItem === 'bimestre3' ? 'flat' : 'tonal'"
+                        size="small"
+                        class="elevation-3 competencia-btn"
+                        rounded="circle"
+                        :width="36"
+                        :height="36"
+                      >
+                        <span class="font-weight-bold text-white text-caption">3</span>
+                      </v-btn>
+                    </template>
+                  </v-tooltip>
+                  <div class="text-center mt-1 text-caption">
+                    <div class="font-weight-bold">Bim. 3</div>
+                  </div>
+                </div>
+
+                <v-icon icon="mdi-arrow-right" color="grey" size="14" class="mx-1 flex-shrink-0"></v-icon>
+
+                <!-- Bimestre 4 -->
+                <div class="competencia-item flex-shrink-0">
+                  <v-tooltip text="Bimestre 4" location="top">
+                    <template v-slot:activator="{ props }">
+                      <v-btn
+                        v-bind="props"
+                        @click="handleFlowClick('bimestre4')"
+                        color="teal"
+                        :variant="selectedFlowItem === 'bimestre4' ? 'flat' : 'tonal'"
+                        size="small"
+                        class="elevation-3 competencia-btn"
+                        rounded="circle"
+                        :width="36"
+                        :height="36"
+                      >
+                        <span class="font-weight-bold text-white text-caption">4</span>
+                      </v-btn>
+                    </template>
+                  </v-tooltip>
+                  <div class="text-center mt-1 text-caption">
+                    <div class="font-weight-bold">Bim. 4</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="d-flex d-sm-none flex-column align-center mt-3">
+                
+              </div>
+            </div>
+
+            <!-- Información del elemento seleccionado -->
+            <div v-if="selectedFlowItem" class="mt-4 pa-3 bg-light-blue-lighten-5 rounded">
+              <div class="text-center">
+                <h4 class="font-weight-bold text-primary mb-2">
+                  {{ getFlowItemTitle(selectedFlowItem) }}
+                </h4>
+                <p class="text-body-2 mb-0">
+                  {{ getFlowItemDescription(selectedFlowItem) }}
+                </p>
               </div>
             </div>
           </v-card-text>
@@ -589,6 +757,7 @@ const router = useRouter()
 const curso = ref(null)
 const activeTab = ref('perfil')
 const selectedCompetencia = ref('C6')
+const selectedFlowItem = ref('general')
 
 // Datos de competencias estructurados
 const competencias = ref([
@@ -652,17 +821,17 @@ const competencias = ref([
       },
       {
         codigo: 'DP2',
-        descripcion: 'D1 Recupera información explícita de textos orales que escucha seleccionando datos específicos. Integra esta información cuando es dicha en distintos momentos y por distintos interlocutores en textos que incluyen expresiones con sentido figurado, y vocabulario que incluye sinónimos y términos p'
+        descripcion: 'D1 Recupera información explícita de textos orales que escucha seleccionando datos específicos. Integra esta información cuando es dicha en distintos momentos y por distintos interlocutores en textos que incluyen expresiones con sentido figurado, y vocabulario que incluye sinónimos y términos propios de los campos del saber.'
       },
       {
         codigo: 'DP3',
-        descripcion: 'aja'
+        descripcion: 'D1 Recupera información explícita de textos orales que escucha seleccionando datos específicos. Integra esta información cuando es dicha en distintos momentos y por distintos interlocutores en textos que incluyen expresiones con sentido figurado, y vocabulario que incluye sinónimos y términos propios de los campos del saber.'
       }
     ],
     desempenosAdaptados: [
       {
         codigo: 'DA1',
-        descripcion: 'Recupera información explícita de textos orales que escucha seleccionando datos específicos. Integra esta información cuando es dicha en distintos momentos y por distintos interlocutores en textos que incluyen'
+        descripcion: 'Recupera información explícita de textos orales que escucha seleccionando datos específicos. Integra esta información cuando es dicha en distintos momentos y por distintos interlocutores en textos que incluyen expresiones con sentido figurado, y vocabulario que incluye sinónimos y términos propios de los campos del saber.'
       }
     ]
   },
@@ -754,6 +923,34 @@ const getCompetenciaColor = (codigo) => {
 
 const getSelectedCompetencia = () => {
   return competencias.value.find(c => c.codigo === selectedCompetencia.value)
+}
+
+const handleFlowClick = (item) => {
+  selectedFlowItem.value = item
+  console.log(`Clicked on: ${item}`)
+  // Aquí puedes agregar la lógica específica para cada elemento del flujo
+}
+
+const getFlowItemTitle = (item) => {
+  const titles = {
+    'general': 'General',
+    'bimestre1': 'Bimestre 1',
+    'bimestre2': 'Bimestre 2',
+    'bimestre3': 'Bimestre 3',
+    'bimestre4': 'Bimestre 4'
+  }
+  return titles[item] || ''
+}
+
+const getFlowItemDescription = (item) => {
+  const descriptions = {
+    'general': 'Vista general del desarrollo de competencias durante todo el año académico.',
+    'bimestre1': 'Primer período académico - Marzo a Mayo. Desarrollo inicial de competencias.',
+    'bimestre2': 'Segundo período académico - Mayo a Julio. Consolidación de aprendizajes.',
+    'bimestre3': 'Tercer período académico - Agosto a Octubre. Profundización de conocimientos.',
+    'bimestre4': 'Cuarto período académico - Octubre a Diciembre. Evaluación final y síntesis.'
+  }
+  return descriptions[item] || ''
 }
 
 const goBack = () => {
@@ -855,44 +1052,65 @@ onMounted(() => {
 
 .competencia-flow {
   overflow-x: auto;
-  padding: 8px 0;
+  padding: 12px 0;
 }
 
 .competencia-item {
   min-width: fit-content;
   text-align: center;
+  flex-shrink: 0;
 }
 
-/* Estilos responsive adicionales */
+.competencia-btn {
+  transition: all 0.3s ease;
+  min-width: unset !important;
+}
+
+.competencia-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Mejoras responsive */
 @media (max-width: 600px) {
-  .competencia-flow .d-flex {
-    display: none !important;
+  
+  
+  .gap-2 {
+    gap: 6px;
   }
 }
 
 @media (min-width: 601px) {
-  .competencia-flow .d-flex.d-sm-none {
-    display: none !important;
+  
+  
+  .gap-2 {
+    gap: 12px;
   }
 }
 
-/* Scrollbar personalizado para el flujo horizontal */
+@media (min-width: 960px) {
+  .gap-2 {
+    gap: 16px;
+  }
+}
+
+/* Scrollbar mejorado */
 .competencia-flow::-webkit-scrollbar {
-  height: 4px;
+  height: 6px;
 }
 
 .competencia-flow::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 2px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
 }
 
 .competencia-flow::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 2px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 3px;
 }
 
 .competencia-flow::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: rgba(0, 0, 0, 0.5);
 }
 
 /* Animaciones suaves para los avatares */
